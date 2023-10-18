@@ -8,6 +8,7 @@
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <!-- Compiled and minified JavaScript -->
+    <link rel="stylesheet" href="./assets/css/style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <!-- mapquest links -->
     <script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>
@@ -15,30 +16,42 @@
 </head>
 
 <body>
-    <header>
-        <div id="title">Dude, where's My Brew</div>
-        <div id="radio-lightdark">Light/Dark Mode</div>
-    </header>
-    <div class="container mx-auto px-4 columns-2">
-        <div class="bg-white p-4 max-w-xs">
-            <label for="input" class="block text-sm font-medium leading-6 text-gray-900">Search for City</label>
-            <div class="relative mt-2 rounded-md shadow-sm">
-                <input type="text" name="city" id="cityInput"
-                    class="block w-full ronded-md border-4 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    placeholder="city/state/zip">
-                <div class="absolute inset-y-0 right-0 flex items-center">
+    <header class="header">
+        <div class="head">
+            <span class="blue-text text-darken-2">Dude, where is my brew?</span>
+        </div>
+        
+        <div>
+            <div class="radio-lightdark">
+                <div class="right-align ">Light/Dark Mode icon here
                 </div>
             </div>
         </div>
-        <div id="savedCities" class="list-group">
-            <div>1st saved</div>
-            <div>2nd saved</div>
-            <div>3rd saved</div>
-        </div>
-        <div>
-            <div id="map" style="height: 530px;"></div>
+    </header>
+
+    <div class="citySearch"</div>
+        <label for="input" >Search for City</label>
+    </div>
+
+        <input type="text" name="city" id="cityInput" placeholder="city/state/zip">
+
         </div>
     </div>
+    </div>
+    <div id="savedCities" class="list-group">
+        <div>1st saved</div>
+        <div>2nd saved</div>
+        <div>3rd saved</div>
+    </div>
+    <div>
+        <div id="map" style="height: 530px;"></div>
+    </div>
+    </div>
+
+
+
+
+
     <!-- jquery -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="./assets/js/script.js"></script>
