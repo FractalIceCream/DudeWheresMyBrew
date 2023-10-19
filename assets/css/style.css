@@ -76,3 +76,13 @@ body {
     flex: 1; /* Takes up 1/3 of the available width */
     /* Add other styles for your map here */
 }
+
+#title { 
+    padding: 20px; 
+    margin: 24px;
+    font-size: Arial, Helvetica, sans-serif; 
+    font-weight: bold; 
+    border: 1px solid black; 
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: coral;
+}
