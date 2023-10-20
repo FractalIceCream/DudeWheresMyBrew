@@ -1,6 +1,6 @@
 var apiKey = '4mo1Txzr1ivmB4uKFnqLsmMiKmOEhFul'; //map quest api key
 
-L.mapquest.key = apiKey;
+L.mapquest.key = '4mo1Txzr1ivmB4uKFnqLsmMiKmOEhFul';
 
 // 'map' refers to a <div> element with the ID map
 // https://www.mapquestapi.com/geocoding/v1/address?key=KEY&location=Washington,DC
@@ -17,24 +17,24 @@ var savedCitiesEl = $('#savedCities');
 
 var breweryUrl = 'https://api.openbrewerydb.org/v1/breweries?';    //by_city=dallas';
 // `https://api.openbrewerydb.org/v1/breweries/search?query=${userCity}`;
-$(function() {
+$(function () {
 
     //if no saved cities in local storage provide empty object otherwise get from local
-  if (localStorage.getItem('brewCities') !== null && localStorage.getItem('brewCities') !== '') {
-    savedCities = JSON.parse(localStorage.getItem('brewCities'));
-  } else {
-    savedCities = [];
-  }
+    if (localStorage.getItem('brewCities') !== null && localStorage.getItem('brewCities') !== '') {
+        savedCities = JSON.parse(localStorage.getItem('brewCities'));
+    } else {
+        savedCities = [];
+    }
 
-  for(var entry of savedCities) {
-    addCityEl(entry.city, entry.state, entry.lat, entry.lng);
+    for (var entry of savedCities) {
+        addCityEl(entry.city, entry.state, entry.lat, entry.lng);
 
-  }
+    }
 
     map = L.mapquest.map('map', {
-    center: [32.77822, -96.79512],
-    layers: L.mapquest.tileLayer('map'),
-    zoom: 12
+        center: [32.77822, -96.79512],
+        layers: L.mapquest.tileLayer('map'),
+        zoom: 12
     });
     $(this).on('click', '.searchBtn', fetchUserCity);
     $(this).on('click', '.cityBtn', getCity);
@@ -48,39 +48,48 @@ function renderMap(latLng) {
         center: latLng,
         layers: L.mapquest.tileLayer('map'),
         zoom: 12
-        });
+    });
+    var marker = L.marker(latLng, {
+        icon: L.mapquest.icons.marker(),
+        draggable: false,
+        bounceOnAdd: true,
+    }).bindPopup(location);
+
+    // Add the marker to the map
+    map.addLayer(marker);
 }
 
 function fetchUserCity(event) {
-    if (city === "" | city === null) {return;}
+    if (city === "" | city === null) { return; }
+
 
     var city = userInput.val();
     var url = `https://www.mapquestapi.com/geocoding/v1/address?key=${apiKey}&location=${city}`;
     fetch(url)
-        .then(function(response) {
+        .then(function (response) {
             if (response.status !== 200) {
                 throw response.json();
             }
             return response.json();
         })
-        .then(function(data){
+        .then(function (data) {
             var userCity = data.results[0].locations[0].adminArea5;
             var userState = data.results[0].locations[0].adminArea3;
             var latLng = data.results[0].locations[0].latLng;
             var userLat = latLng.lat;
             var userLng = latLng.lng;
-            
+
             renderMap(latLng);
             var checkHistory = savedCities.some(item => item.city === userCity);
-            if (checkHistory) {return;}
-            
+            if (checkHistory) { return; }
+
             addCityEl(userCity, userState, userLat, userLng);
             storeCity(userCity, userState, userLat, userLng);
         });
 }
 
 function storeCity(city, state, lat, lng) {
-    savedCities.push({city: city, state: state, lat: lat, lng: lng})
+    savedCities.push({ city: city, state: state, lat: lat, lng: lng })
     localStorage.setItem('brewCities', JSON.stringify(savedCities))
 }
 
@@ -125,7 +134,7 @@ function getCity(event) {
     var lat = btnEvent.attr('data-lat');
     var lng = btnEvent.attr('data-lng');
 
-    var latLng = {lat: lat, lng: lng};
+    var latLng = { lat: lat, lng: lng };
     renderMap(latLng);
 }
 function getBreweries(event) {
@@ -149,16 +158,15 @@ function getBreweries(event) {
 }
 
 fetch(breweryUrl)
-    .then(function(response) {
-    if (response.status !== 200) {
-        throw response.json();
-    }
-    return response.json();
+    .then(function (response) {
+        if (response.status !== 200) {
+            throw response.json();
+        }
+        return response.json();
     })
-    .then(function(data) {
+    .then(function (data) {
         // console.log(data)
-});
-
+    });
 
 
 
