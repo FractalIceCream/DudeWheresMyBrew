@@ -1,7 +1,7 @@
 
 var apiKey = '4mo1Txzr1ivmB4uKFnqLsmMiKmOEhFul'; //map quest api key
 
-L.mapquest.key = apiKey;
+L.mapquest.key = '4mo1Txzr1ivmB4uKFnqLsmMiKmOEhFul';
 
 // 'map' refers to a <div> element with the ID map
 // https://www.mapquestapi.com/geocoding/v1/address?key=KEY&location=Washington,DC
@@ -101,7 +101,6 @@ fetch(breweryUrl)
     .then(function(data) {
         console.log(data)
 });
-
 
 
 
