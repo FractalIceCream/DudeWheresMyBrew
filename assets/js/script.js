@@ -39,8 +39,7 @@ $(function() {
     $(this).on('click', '.searchBtn', fetchUserCity);
     $(this).on('click', '.cityBtn', getCity);
     $(this).on('click', '.removeBtn', removeCityEl);
-
-
+    $(this).on('click', '.getBrewBtn', getBreweries);
 });
 
 function renderMap(latLng) {
@@ -55,7 +54,6 @@ function renderMap(latLng) {
 function fetchUserCity(event) {
     if (city === "" | city === null) {return;}
 
-    
     var city = userInput.val();
     var url = `https://www.mapquestapi.com/geocoding/v1/address?key=${apiKey}&location=${city}`;
     fetch(url)
@@ -101,6 +99,10 @@ function addCityEl(city, state, lat, lng) {
                 class="removeBtn">
                 Remove
         </button>
+        <button type="button"
+                class="getBrewBtn">
+                Get Breweries
+        </button>
     </li>
     `));
 }
@@ -108,7 +110,7 @@ function addCityEl(city, state, lat, lng) {
 function removeCityEl(event) {
     event.stopPropagation();
     var btnEvent = $(event.target);
-    var city = btnEvent.siblings('.citeBtn').attr('data-city');
+    var city = btnEvent.siblings('.cityBtn').attr('data-city');
     var result = savedCities.findIndex(item => item.city === city);
     savedCities.splice(result, 1);
 
@@ -126,7 +128,25 @@ function getCity(event) {
     var latLng = {lat: lat, lng: lng};
     renderMap(latLng);
 }
-// function getBreweries
+function getBreweries(event) {
+    var btnEvent = $(event.target);
+    var city = btnEvent.siblings('.cityBtn').attr('data-city');
+
+    
+
+
+
+    // fetch(breweryUrl)
+    //     .then(funciton(response) {
+    //         if (response.status !== 200) {
+    //             throw response.json();
+    //         }
+    //         return response.json();
+    //     })
+    //     .then(function(data) {
+    //         console.log(data);
+    //     });
+}
 
 fetch(breweryUrl)
     .then(function(response) {
