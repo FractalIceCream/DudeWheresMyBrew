@@ -1,3 +1,19 @@
+var lightDark = $(".ldMode"); 
+var toggle = $("#toggle");  
+// chreate new variable for title. put it in the "if" statement colorname-text 
+
+// toggle.on( "change", function() {
+    //alert( "Handler for `change` called." );
+    // if (toggle[0].checked===true) { 
+            // lightDark.removeClass("blue").addClass("orange"); 
+    // }
+    // else {
+        // lightDark.removeClass("orange").addClass("blue"); 
+    // }
+    // return; 
+// } );
+
+
 
 var apiKey = '4mo1Txzr1ivmB4uKFnqLsmMiKmOEhFul'; //map quest api key
 
