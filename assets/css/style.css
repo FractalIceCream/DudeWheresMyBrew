@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Rubik');
+
 body {
     background-image: url("../img/bg\ 2.jpg");
     background-size: cover;
@@ -16,25 +18,26 @@ body {
 
 }
 
+.black-text {
+    font-family: Rubik, sans-serif;
+    font-weight: bold;
+    font: size 36px;
+}
+
 .right-align {
     .material-symbols-outlined {
         font-variation-settings:
-        'FILL' 0,
-        'wght' 400,
-        'GRAD' 0,
-        'opsz' 24
-      }
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+    }
 }
-
-/* .searchContainer {
-    display: flex;
-    align-items: center;
-} */
 
 .citySearch {
     /* border: 4px black solid; */
     padding: 20px;
-    width: 500px;  
+    width: 500px;
 }
 
 #map {
@@ -44,9 +47,10 @@ body {
     /* float: right;  */
     width: 1000px;
     height: 600px;
-    margin: 50px;
-    padding: 50px;
+    margin: 100px;
+    padding: 100px;
     border: 12px orange solid;
+    flex: 1;
 }
 
 .list-group {
@@ -63,34 +67,23 @@ body {
 } */
 
 #cityInput {
-        font-size: 16px;
-        color: #333;
-        font-weight: bold;
-        background-color: azure;
-        
-    }
+    font-size: 16px;
+    color: #333;
+    font-weight: bold;
+    background-color: azure;
+
+}
 
 .searchBtn {
     background-color: darkcyan;
-    color: #FFFFFF; /* Change to your desired text color */
+    color: #FFFFFF;
+    /* Change to your desired text color */
     font-size: 20px;
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 .container {
     display: flex;
@@ -99,8 +92,4 @@ body {
 
 .cityContainer {
     margin-left: 0;
-}
-
-#map {
-    flex: 1; 
 }
