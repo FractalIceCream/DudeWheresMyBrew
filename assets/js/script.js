@@ -52,7 +52,6 @@ function createMap(error, response) {
 //render new Map with city, state arguments
 function renderMap(city, state) {
     map.remove(); //handled first before instantiating new map
-    console.log(city + state);
     L.mapquest.geocoding().geocode(`${city}, ${state}`, createMap);
 }
 
@@ -75,7 +74,6 @@ function fetchUserCity(event) {
             var userLat = latLng.lat;
             var userLng = latLng.lng;
 
-            console.log(userCity, userState);
             renderMap(userCity, userState);
             var checkHistory = savedCities.some(item => item.city === userCity);
             if (checkHistory) { return; }
@@ -97,10 +95,10 @@ function addCityEl(city, state, lat, lng) {
     <li>
         <button type="button" 
                 class="cityBtn" 
-                data-city=${city} 
-                data-state=${state} 
-                data-lat=${lat}
-                data-lng=${lng}>
+                data-city="${city}" 
+                data-state="${state}"
+                data-lat="${lat}"
+                data-lng="${lng}">
                 ${city}, ${state}
         </button>
         <button type="button"
@@ -198,8 +196,6 @@ function renderBreweries(dataSet, city, state) {
         
         //each location append marker and popup
         for (var i = 0; i < response.results.length; i++) {
-            // console.log(location);
-            // console.log(breweries[i].url)
             var location = response.results[i].locations[0];
             var locationLatLng = location.latLng;
             var marker;
@@ -208,7 +204,6 @@ function renderBreweries(dataSet, city, state) {
             if (i === 0) {
             marker = L.marker(locationLatLng, { icon: L.mapquest.icons.circle({primaryColor: '#2AAA8A'}) })
                 .bindPopup(location.adminArea5 + ', ' + location.adminArea3);
-                // console.log(L.mapquest.icons);
             } else {
             var customPopup = L.popup()
                 .setLatLng(locationLatLng)
