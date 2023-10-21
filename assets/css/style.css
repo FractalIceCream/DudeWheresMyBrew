@@ -62,17 +62,45 @@ body {
     display: flex;
 } */
 
+#cityInput {
+        font-size: 16px;
+        color: #333;
+        font-weight: bold;
+        background-color: azure;
+        
+    }
+
+.searchBtn {
+    background-color: darkcyan;
+    color: #FFFFFF; /* Change to your desired text color */
+    font-size: 20px;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 .container {
     display: flex;
     margin-left: 0;
 }
 
 .cityContainer {
-    /* flex: 1;  */
     margin-left: 0;
 }
 
 #map {
-    flex: 1; /* Takes up 1/3 of the available width */
-    /* Add other styles for your map here */
+    flex: 1; 
 }
