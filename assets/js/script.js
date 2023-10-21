@@ -27,7 +27,7 @@ $(function () {
         addCityEl(entry.city, entry.state, entry.lat, entry.lng);
 
     }
-    
+
     //initlalize map on page load
     L.mapquest.geocoding().geocode('Dallas, TX', createMap);
 
@@ -74,6 +74,9 @@ function fetchUserCity(event) {
             var userLat = latLng.lat;
             var userLng = latLng.lng;
 
+            //accept valid cities ex:city name or postal code
+            if (userCity === "" | userCity === null) { return; }
+
             renderMap(userCity, userState);
             var checkHistory = savedCities.some(item => item.city === userCity);
             if (checkHistory) { return; }
@@ -106,8 +109,9 @@ function addCityEl(city, state, lat, lng) {
                 Remove
         </button>
         <button type="button"
-                class="getBrewBtn">
-                Get Breweries
+                class="getBrewBtn"
+                data-count="5">
+                Show 5 Breweries
         </button>
     </li>
     `));
@@ -146,7 +150,9 @@ function getBreweries(event) {
     var lat = btnEvent.siblings('.cityBtn').attr('data-lat');
     var lng = btnEvent.siblings('.cityBtn').attr('data-lng');
 
-    var byDistUrl = `${breweryUrl}by_dist=${lat},${lng}&per_page=5`;
+    var count = parseInt(btnEvent.attr('data-count'));
+
+    var byDistUrl = `${breweryUrl}by_dist=${lat},${lng}&per_page=${count}`;
     fetch(byDistUrl)
         .then(function (response) {
             if (response.status !== 200) {
@@ -155,6 +161,13 @@ function getBreweries(event) {
             return response.json();
         })
         .then(function (data) {
+            if (count === 20) {
+                count = 5;
+            } else {
+                count += 5;
+            }
+            btnEvent.attr('data-count', count);
+            btnEvent.text(`Show ${count} breweries`);
             renderBreweries(data, city, state);
         });
 }
@@ -168,7 +181,8 @@ function renderBreweries(dataSet, city, state) {
             city: dataSet[i].city,
             state: dataSet[i].state,
             postalCode: dataSet[i].postal_code,
-            url: dataSet[i].website_url
+            url: dataSet[i].website_url,
+            brewName: dataSet[i].name
         });
     }
 
@@ -190,34 +204,39 @@ function renderBreweries(dataSet, city, state) {
         featureGroup.addTo(map);
         map.fitBounds(featureGroup.getBounds());
     }
-    
+
     function generateMarkersFeatureGroup(response) {
         var group = [];
-        
+
         //each location append marker and popup
         for (var i = 0; i < response.results.length; i++) {
             var location = response.results[i].locations[0];
             var locationLatLng = location.latLng;
             var marker;
-            
+
             // Create a marker for each location
             if (i === 0) {
-            marker = L.marker(locationLatLng, { icon: L.mapquest.icons.circle({primaryColor: '#2AAA8A'}) })
-                .bindPopup(location.adminArea5 + ', ' + location.adminArea3);
+                marker = L.marker(locationLatLng, { icon: L.mapquest.icons.circle({ primaryColor: '#2AAA8A' }) })
+                    .bindPopup(location.adminArea5 + ', ' + location.adminArea3);
             } else {
-            var customPopup = L.popup()
-                .setLatLng(locationLatLng)
-                .setContent(`
-                <div> ${location.street} </div>
-                <div> <a href=${breweries[i].url} target="_blank">${breweries[i].url}</a></div>
-                `);
-            marker = L.marker(locationLatLng, { icon: L.mapquest.icons.marker() })
+
+                var content = `
+                <div> ${breweries[i].brewName} </div>
+                <div> ${location.street} </div>`;
+                if (breweries[i].url !== null) {
+                    content += `<div><a href="${breweries[i].url}" target="_blank">${breweries[i].url}</a></div>`;
+                }
+
+                var customPopup = L.popup()
+                    .setLatLng(locationLatLng)
+                    .setContent(content);
+
+                marker = L.marker(locationLatLng, { icon: L.mapquest.icons.marker() })
                     .bindPopup(customPopup);
-                // .bindPopup(location.street);
             }
-            
             group.push(marker);
         }
         return L.featureGroup(group); //return Mapquest's featureGroup to be added
     }
+
 }
