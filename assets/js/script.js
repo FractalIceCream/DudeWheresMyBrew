@@ -1,6 +1,28 @@
-var lightDark = $(".ldMode"); 
-var toggle = $("#toggle");  
+//var lightDark = $(".ldMode"); 
+//var toggle = $("#toggle");  
 // chreate new variable for title. put it in the "if" statement colorname-text 
+
+
+// Get the toggle input element
+const toggleInput = document.querySelector('.toggle-input');
+
+// Add an event listener to toggle the switch
+toggleInput.addEventListener('change', function () {
+  // Check if the input is checked
+  if (toggleInput.checked) {
+    // Switch is ON
+    // You can perform actions when the switch is turned on here
+    console.log('Switch is ON');
+  } else {
+    // Switch is OFF
+    // You can perform actions when the switch is turned off here
+    console.log('Switch is OFF');
+  }
+});
+
+
+
+
 
 // toggle.on( "change", function() {
     //alert( "Handler for `change` called." );
