@@ -30,6 +30,13 @@ $(function () {
 
     //initlalize map on page load
     L.mapquest.geocoding().geocode('Dallas, TX', createMap);
+    
+    // Add event listener for Enter key press
+    userInput.keypress(function (event) {
+        if (event.which === 13) { // 13 is the key code for Enter
+            fetchUserCity();
+        }
+    });
 
     //button listeners
     $(document).ready(function(){
