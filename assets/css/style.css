@@ -97,3 +97,7 @@ body {
 .getBrewBtn:hover {
     cursor:grab;
 }
+
+.material-symbols-outlined:hover {
+    cursor: pointer;
+}
