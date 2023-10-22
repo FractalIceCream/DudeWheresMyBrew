@@ -93,3 +93,7 @@ body {
 .cityContainer {
     margin-left: 0;
 }
+
+.getBrewBtn:hover {
+    cursor:grab;
+}

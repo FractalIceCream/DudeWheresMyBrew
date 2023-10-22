@@ -32,6 +32,9 @@ $(function () {
     L.mapquest.geocoding().geocode('Dallas, TX', createMap);
 
     //button listeners
+    $(document).ready(function(){
+        $('.collapsible').collapsible();
+      });
     $(this).on('click', '.searchBtn', fetchUserCity);
     $(this).on('click', '.cityBtn', getCity);
     $(this).on('click', '.removeBtn', removeCityEl);
@@ -96,23 +99,19 @@ function storeCity(city, state, lat, lng) {
 function addCityEl(city, state, lat, lng) {
     savedCitiesEl.children('ul').append($(`
     <li>
-        <button type="button" 
-                class="cityBtn" 
-                data-city="${city}" 
+        <div class="collapsible-header cityBtn"
+                data-city="${city}"
                 data-state="${state}"
                 data-lat="${lat}"
                 data-lng="${lng}">
-                ${city}, ${state}
-        </button>
-        <button type="button"
-                class="removeBtn">
-                Remove
-        </button>
-        <button type="button"
-                class="getBrewBtn"
-                data-count="5">
-                Show 5 Breweries
-        </button>
+            <i class="material-icons left">place</i>
+            ${city}, ${state}
+            <i class="material-icons right removeBtn">delete_forever</i>    
+        </div>
+        <div class="collapsible-body collection left-align">
+            <a class="collection-item getBrewBtn" data-count="5">
+                <i class="material-icons left">add_location</i>Show 5 Breweries</a>
+        </div>
     </li>
     `));
 }
@@ -126,7 +125,7 @@ function removeCityEl(event) {
     savedCities.splice(result, 1);
 
     localStorage.setItem('brewCities', JSON.stringify(savedCities));
-    btnEvent.parent().remove();
+    btnEvent.parent().parent().remove();
 }
 
 //retrieve data from city btn to render map
@@ -134,10 +133,7 @@ function getCity(event) {
     var btnEvent = $(event.target);
     var city = btnEvent.attr('data-city');
     var state = btnEvent.attr('data-state');
-    var lat = btnEvent.attr('data-lat');
-    var lng = btnEvent.attr('data-lng');
 
-    var latLng = { lat: lat, lng: lng };
     // renderMap(latLng);
     renderMap(city, state);
 }
@@ -145,11 +141,10 @@ function getCity(event) {
 //retrieve the 5 closest brewiers from locations using OpenBreweriesDB API
 function getBreweries(event) {
     var btnEvent = $(event.target);
-    var city = btnEvent.siblings('.cityBtn').attr('data-city');
-    var state = btnEvent.siblings('.ctiyBtn').attr('data-state');
-    var lat = btnEvent.siblings('.cityBtn').attr('data-lat');
-    var lng = btnEvent.siblings('.cityBtn').attr('data-lng');
-
+    var city = btnEvent.parent().siblings('.cityBtn').attr('data-city');
+    var state = btnEvent.parent().siblings('.cityBtn').attr('data-state');
+    var lat = btnEvent.parent().siblings('.cityBtn').attr('data-lat');
+    var lng = btnEvent.parent().siblings('.cityBtn').attr('data-lng');
     var count = parseInt(btnEvent.attr('data-count'));
 
     var byDistUrl = `${breweryUrl}by_dist=${lat},${lng}&per_page=${count}`;
@@ -167,7 +162,7 @@ function getBreweries(event) {
                 count += 5;
             }
             btnEvent.attr('data-count', count);
-            btnEvent.text(`Show ${count} breweries`);
+            btnEvent.html(`<i class="material-icons left">add_location</i>Show ${count} breweries`);
             renderBreweries(data, city, state);
         });
 }
