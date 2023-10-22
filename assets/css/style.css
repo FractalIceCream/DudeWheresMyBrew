@@ -58,7 +58,7 @@ body {
     display: flex;
     justify-content: flex-start;
     height: 700px;
-    width: 300px;
+    width: 400px;
     font-weight: bold;
 }
 
@@ -92,4 +92,8 @@ body {
 
 .cityContainer {
     margin-left: 0;
+}
+
+.getBrewBtn:hover {
+    cursor:grab;
 }

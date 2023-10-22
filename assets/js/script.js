@@ -27,11 +27,14 @@ $(function () {
         addCityEl(entry.city, entry.state, entry.lat, entry.lng);
 
     }
-    
+
     //initlalize map on page load
     L.mapquest.geocoding().geocode('Dallas, TX', createMap);
 
     //button listeners
+    $(document).ready(function(){
+        $('.collapsible').collapsible();
+      });
     $(this).on('click', '.searchBtn', fetchUserCity);
     $(this).on('click', '.cityBtn', getCity);
     $(this).on('click', '.removeBtn', removeCityEl);
@@ -74,6 +77,9 @@ function fetchUserCity(event) {
             var userLat = latLng.lat;
             var userLng = latLng.lng;
 
+            //accept valid cities ex:city name or postal code
+            if (userCity === "" | userCity === null) { return; }
+
             renderMap(userCity, userState);
             var checkHistory = savedCities.some(item => item.city === userCity);
             if (checkHistory) { return; }
@@ -93,22 +99,19 @@ function storeCity(city, state, lat, lng) {
 function addCityEl(city, state, lat, lng) {
     savedCitiesEl.children('ul').append($(`
     <li>
-        <button type="button" 
-                class="cityBtn" 
-                data-city="${city}" 
+        <div class="collapsible-header cityBtn"
+                data-city="${city}"
                 data-state="${state}"
                 data-lat="${lat}"
                 data-lng="${lng}">
-                ${city}, ${state}
-        </button>
-        <button type="button"
-                class="removeBtn">
-                Remove
-        </button>
-        <button type="button"
-                class="getBrewBtn">
-                Get Breweries
-        </button>
+            <i class="material-icons left">place</i>
+            ${city}, ${state}
+            <i class="material-icons right removeBtn">delete_forever</i>    
+        </div>
+        <div class="collapsible-body collection left-align">
+            <a class="collection-item getBrewBtn" data-count="5">
+                <i class="material-icons left">add_location</i>Show 5 Breweries</a>
+        </div>
     </li>
     `));
 }
@@ -122,7 +125,7 @@ function removeCityEl(event) {
     savedCities.splice(result, 1);
 
     localStorage.setItem('brewCities', JSON.stringify(savedCities));
-    btnEvent.parent().remove();
+    btnEvent.parent().parent().remove();
 }
 
 //retrieve data from city btn to render map
@@ -130,10 +133,7 @@ function getCity(event) {
     var btnEvent = $(event.target);
     var city = btnEvent.attr('data-city');
     var state = btnEvent.attr('data-state');
-    var lat = btnEvent.attr('data-lat');
-    var lng = btnEvent.attr('data-lng');
 
-    var latLng = { lat: lat, lng: lng };
     // renderMap(latLng);
     renderMap(city, state);
 }
@@ -141,12 +141,13 @@ function getCity(event) {
 //retrieve the 5 closest brewiers from locations using OpenBreweriesDB API
 function getBreweries(event) {
     var btnEvent = $(event.target);
-    var city = btnEvent.siblings('.cityBtn').attr('data-city');
-    var state = btnEvent.siblings('.ctiyBtn').attr('data-state');
-    var lat = btnEvent.siblings('.cityBtn').attr('data-lat');
-    var lng = btnEvent.siblings('.cityBtn').attr('data-lng');
+    var city = btnEvent.parent().siblings('.cityBtn').attr('data-city');
+    var state = btnEvent.parent().siblings('.cityBtn').attr('data-state');
+    var lat = btnEvent.parent().siblings('.cityBtn').attr('data-lat');
+    var lng = btnEvent.parent().siblings('.cityBtn').attr('data-lng');
+    var count = parseInt(btnEvent.attr('data-count'));
 
-    var byDistUrl = `${breweryUrl}by_dist=${lat},${lng}&per_page=5`;
+    var byDistUrl = `${breweryUrl}by_dist=${lat},${lng}&per_page=${count}`;
     fetch(byDistUrl)
         .then(function (response) {
             if (response.status !== 200) {
@@ -155,6 +156,13 @@ function getBreweries(event) {
             return response.json();
         })
         .then(function (data) {
+            if (count === 20) {
+                count = 5;
+            } else {
+                count += 5;
+            }
+            btnEvent.attr('data-count', count);
+            btnEvent.html(`<i class="material-icons left">add_location</i>Show ${count} breweries`);
             renderBreweries(data, city, state);
         });
 }
@@ -168,7 +176,8 @@ function renderBreweries(dataSet, city, state) {
             city: dataSet[i].city,
             state: dataSet[i].state,
             postalCode: dataSet[i].postal_code,
-            url: dataSet[i].website_url
+            url: dataSet[i].website_url,
+            brewName: dataSet[i].name
         });
     }
 
@@ -190,34 +199,39 @@ function renderBreweries(dataSet, city, state) {
         featureGroup.addTo(map);
         map.fitBounds(featureGroup.getBounds());
     }
-    
+
     function generateMarkersFeatureGroup(response) {
         var group = [];
-        
+
         //each location append marker and popup
         for (var i = 0; i < response.results.length; i++) {
             var location = response.results[i].locations[0];
             var locationLatLng = location.latLng;
             var marker;
-            
+
             // Create a marker for each location
             if (i === 0) {
-            marker = L.marker(locationLatLng, { icon: L.mapquest.icons.circle({primaryColor: '#2AAA8A'}) })
-                .bindPopup(location.adminArea5 + ', ' + location.adminArea3);
+                marker = L.marker(locationLatLng, { icon: L.mapquest.icons.circle({ primaryColor: '#2AAA8A' }) })
+                    .bindPopup(location.adminArea5 + ', ' + location.adminArea3);
             } else {
-            var customPopup = L.popup()
-                .setLatLng(locationLatLng)
-                .setContent(`
-                <div> ${location.street} </div>
-                <div> <a href=${breweries[i].url} target="_blank">${breweries[i].url}</a></div>
-                `);
-            marker = L.marker(locationLatLng, { icon: L.mapquest.icons.marker() })
+
+                var content = `
+                <div> ${breweries[i].brewName} </div>
+                <div> ${location.street} </div>`;
+                if (breweries[i].url !== null) {
+                    content += `<div><a href="${breweries[i].url}" target="_blank">${breweries[i].url}</a></div>`;
+                }
+
+                var customPopup = L.popup()
+                    .setLatLng(locationLatLng)
+                    .setContent(content);
+
+                marker = L.marker(locationLatLng, { icon: L.mapquest.icons.marker() })
                     .bindPopup(customPopup);
-                // .bindPopup(location.street);
             }
-            
             group.push(marker);
         }
         return L.featureGroup(group); //return Mapquest's featureGroup to be added
     }
+
 }
