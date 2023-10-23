@@ -1,3 +1,16 @@
+var lightDark = $(".ldMode");
+var toggle = $("#toggle");
+toggle.on( "change", function() {
+     if (toggle[0].checked===true) {
+             lightDark.removeClass("blue").addClass("orange");
+     }
+     else {
+        lightDark.removeClass("orange").addClass("blue");
+     }
+     return;
+ } );
+
+
 var apiKey = '4mo1Txzr1ivmB4uKFnqLsmMiKmOEhFul'; //map quest api key
 
 L.mapquest.key = apiKey;
