@@ -241,4 +241,18 @@ function renderBreweries(dataSet, city, state) {
         return L.featureGroup(group); //return Mapquest's featureGroup to be added
     }
 
+
 }
+
+$(document).ready(function () {
+    var lightDark = $(".ldMode");
+    var toggle = $("#toggle");
+
+    toggle.on("change", function () {
+        if (toggle[0].checked === true) {
+            lightDark.removeClass("cyan darken-1").addClass("orange");
+        } else {
+            lightDark.removeClass("orange").addClass("cyan darken-1");
+        }
+    });
+});

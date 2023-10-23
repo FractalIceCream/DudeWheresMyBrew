@@ -16,35 +16,44 @@
 </head>
 
 <body>
-    <header class="header orange lighten-2">
+    <header class="header orange lighten-2 ldMode">
         <div class="head">
             <span class="black-text text-darken-2">Dude, where is my
                 brew?</span>
         </div>
         <div>
-            <div class="radio-lightdark">
-                <div class="right-align ">
-                    <span class="material-symbols-outlined" style="font-size:60px">
-                        sports_bar
-                    </span>
+            <!-- <div class="radio-lightdark"> -->
+                <div class="toggle-switch">
+                    <input type="checkbox" id="toggle" class="toggle-input">
+                    <label for="toggle" class="toggle-label">
+                        <i class="material-symbols-outlined" style="font-size:60px">
+                            sports_bar
+</i>
+                    </label>
                 </div>
-            </div>
+            <!-- <div class="right-align ">
+                <span class="material-symbols-outlined" style="font-size:60px">
+                    sports_bar
+                </span>
+            </div>  -->
+        </div>
         </div>
     </header>
 
     <div class="searchContainer">
         <div>
-            <input type="text" name="city" id="cityInput" placeholder="Enter a city to find your new favorite brewery!">
+            <input type="text" name="city" id="cityInput" class= "grey lighten-1" placeholder="Enter a city to find your new favorite brewery!">
+
         </div>
 
         <div>
-            <button type="button" class="searchBtn">Search</button>
+            <button type="button" class="searchBtn cyan black-text">Search</button>
         </div>
     </div>
 
     <div class="container">
         <div class="cityContainer">
-            <div id="savedCities" class="list-group orange lighten-2">
+            <div id="savedCities" class="list-group orange ldMode lighten-2">
                 <ul class="collapsible" style="width: 100%;"></ul>
             </div>
         </div>
