@@ -16,36 +16,26 @@
 </head>
 
 <body>
-    <header class="header orange lighten-2 ldMode">
+    <header class="header ldMode orange lighten-2">
         <div class="head">
-            <span class="black-text text-darken-2 text-shadow">Dude, where is my
+            <span class="title-large black-text text-shadow-burnt-orange shMode">Dude, where is my
                 brew?</span>
         </div>
         <div>
             <div class="radio-lightdark">
                 <div class="right-align ">
 
-                    <span class="material-symbols-outlined text-shadow" style="font-size:60px">
+                    <span class="material-symbols-outlined text-shadow-burnt-orange shMode" style="font-size:60px">
                         sports_bar
                     </span>
-                    <!-- Switch -->
-                    <div class="switch">
-                        <!-- Switch -->
-                    </div>
-                    <!-- testing light dark button -->
                     <div class="toggle-switch">
                         <input type="checkbox" id="toggle" class="toggle-input">
                         <label for="toggle" class="toggle-label"></label>
                     </div>
                 </div>
-
             </div>
         </div>
         </div>
-
-
-
-
     </header>
 
     <div class="searchContainer">
@@ -59,20 +49,18 @@
     </div>
 
     <div class="container">
-        <div class="cityContainer">
-            <div id="savedCities" class="list-group orange lighten-2">
-                <ul class="collapsible" style="width: 100%;"></ul>
+        <div class="cityContainer" style="flex:1;">
+            <div id="savedCities" class="" style="width: 300px;">
+                <ul class="collapsible ldMode orange lighten-2" style="width: 100%;"></ul>
             </div>
         </div>
-        <div>
-            <div id="map"></div>
+        <div style="flex:2;">
+            <div id="map" class="ldMode"></div>
         </div>
     </div>
 
-    <!-- jquery -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <!-- mapquest links -->
     <script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>
     <script src="./assets/js/script.js"></script>
 </body>

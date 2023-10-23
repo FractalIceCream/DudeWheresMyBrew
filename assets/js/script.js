@@ -1,16 +1,3 @@
-var lightDark = $(".ldMode");
-var toggle = $("#toggle");
-toggle.on( "change", function() {
-     if (toggle[0].checked===true) {
-             lightDark.removeClass("blue").addClass("orange");
-     }
-     else {
-        lightDark.removeClass("orange").addClass("blue");
-     }
-     return;
- } );
-
-
 var apiKey = '4mo1Txzr1ivmB4uKFnqLsmMiKmOEhFul'; //map quest api key
 
 L.mapquest.key = apiKey;
@@ -20,12 +7,15 @@ L.mapquest.key = apiKey;
 var userInput = $('#cityInput');
 var map;
 var savedCities = [];
+var lightDark = $(".ldMode");
+var shadow = $('.shMode');
+var toggle = $("#toggle");
+var leaflet = $('.leaflet-popup-content-wrapper');
 
 var savedCitiesEl = $('#savedCities');
 // var byDistUrl = 'https://api.openbrewerydb.org/v1/breweries?';  //by_dist=${},${}38.8977,77.0365&per_page=3`;
 var breweryUrl = 'https://api.openbrewerydb.org/v1/breweries?';    //by_city=dallas';
 // `https://api.openbrewerydb.org/v1/breweries/search?query=${userCity}`;
-
 $(function () {
 
     //if no saved cities in local storage provide empty object otherwise get from local
@@ -43,7 +33,7 @@ $(function () {
 
     //initlalize map on page load
     L.mapquest.geocoding().geocode('Dallas, TX', createMap);
-    
+
     // Add event listener for Enter key press
     userInput.keypress(function (event) {
         if (event.which === 13) { // 13 is the key code for Enter
@@ -52,16 +42,43 @@ $(function () {
     });
 
     //button listeners
-    $(document).ready(function(){
+    $(document).ready(function () {
         $('.collapsible').collapsible();
-      });
+    });
     $(this).on('click', '.searchBtn', fetchUserCity);
     $(this).on('click', '.cityBtn', getCity);
     $(this).on('click', '.removeBtn', removeCityEl);
     $(this).on('click', '.getBrewBtn', getBreweries);
+    $(this).on('click', '.leaflet-marker-icon', lightDarkMode);
+    $(this).on('change', '#toggle', lightDarkMode);
+
 });
 
-
+//changes various div elements from light colors to dark colors
+function lightDarkMode() {
+    lightDark = $('.ldMode');
+    shadow = $('.shMode');
+    leaflet = $('.leaflet-popup-content-wrapper');
+    if (toggle[0].checked === true) {
+        lightDark.removeClass("orange").addClass("blue-grey");
+        lightDark.removeClass("lighten-2").addClass("darken-4");
+        shadow.removeClass('text-shadow-burnt-orange');
+        shadow.addClass('text-shadow-turquoise');
+        leaflet.removeClass('orange').removeClass('lighten-2');
+        leaflet.addClass('blue-grey').addClass('darken-4').addClass('teal-text');
+        $('#map').attr('style', 'position: relative; border-color: turquoise;');
+    }
+    else {
+        lightDark.removeClass("blue-grey").addClass("orange");
+        lightDark.removeClass("darken-4").addClass("lighten-2");
+        shadow.removeClass('text-shadow-turquoise');
+        shadow.addClass('text-shadow-burnt-orange');
+        leaflet.removeClass('blue-grey').removeClass('darken-4').removeClass('teal-text');
+        leaflet.addClass('orange').addClass('lighten-2');
+        $('#map').attr('style', 'position: relative; border-color: var(--orange-lighten-2);');
+    }
+    return;
+}
 //create map data -required for geocode
 function createMap(error, response) {
     var location = response.results[0].locations[0];
@@ -119,7 +136,7 @@ function storeCity(city, state, lat, lng) {
 function addCityEl(city, state, lat, lng) {
     savedCitiesEl.children('ul').append($(`
     <li>
-        <div class="collapsible-header cityBtn"
+        <div class="collapsible-header ldMode cityBtn orange lighten-2 teal-text text-accent-2 shMode text-shadow-burnt-orange"
                 data-city="${city}"
                 data-state="${state}"
                 data-lat="${lat}"
@@ -128,8 +145,8 @@ function addCityEl(city, state, lat, lng) {
             ${city}, ${state}
             <i class="material-icons right removeBtn">delete_forever</i>    
         </div>
-        <div class="collapsible-body collection left-align">
-            <a class="collection-item getBrewBtn" data-count="5">
+        <div class="collapsible-body collection left-align" style="margin:-24px;">
+            <a class="collection-item ldMode getBrewBtn z-depth-3 orange lighten-2 green-text shMode text-shadow-burnt-orange" data-count="5">
                 <i class="material-icons left">add_location</i>Show 5 Breweries</a>
         </div>
     </li>
@@ -229,9 +246,9 @@ function renderBreweries(dataSet, city, state) {
             var locationLatLng = location.latLng;
             var marker;
 
-            // Create a marker for each location
+            // Create a marker for each location //#2AAA8A //#263238 - grey dark #4caf50 - green
             if (i === 0) {
-                marker = L.marker(locationLatLng, { icon: L.mapquest.icons.circle({ primaryColor: '#2AAA8A' }) })
+                marker = L.marker(locationLatLng, { icon: L.mapquest.icons.circle({ primaryColor: '#263238' }) })
                     .bindPopup(location.adminArea5 + ', ' + location.adminArea3);
             } else {
 
@@ -246,7 +263,7 @@ function renderBreweries(dataSet, city, state) {
                     .setLatLng(locationLatLng)
                     .setContent(content);
 
-                marker = L.marker(locationLatLng, { icon: L.mapquest.icons.marker() })
+                marker = L.marker(locationLatLng, { icon: L.mapquest.icons.marker({ primaryColor: '#4caf50' }) })
                     .bindPopup(customPopup);
             }
             group.push(marker);
