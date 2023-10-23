@@ -13,6 +13,12 @@ var savedCitiesEl = $('#savedCities');
 var breweryUrl = 'https://api.openbrewerydb.org/v1/breweries?';    //by_city=dallas';
 // `https://api.openbrewerydb.org/v1/breweries/search?query=${userCity}`;
 
+
+
+// bg color
+// orange lighten-2      blue-grey darken-4
+// text color
+// orange-text text-lighten-2        blue-grey-text text-darken-4
 $(function () {
 
     //if no saved cities in local storage provide empty object otherwise get from local
@@ -46,6 +52,10 @@ $(function () {
     $(this).on('click', '.cityBtn', getCity);
     $(this).on('click', '.removeBtn', removeCityEl);
     $(this).on('click', '.getBrewBtn', getBreweries);
+    $(this).on('click', '.leaflet-marker-icon', () => {
+        $('.leaflet-popup-content-wrapper').addClass('orange');
+    });
+    
 });
 
 
@@ -106,7 +116,7 @@ function storeCity(city, state, lat, lng) {
 function addCityEl(city, state, lat, lng) {
     savedCitiesEl.children('ul').append($(`
     <li>
-        <div class="collapsible-header cityBtn"
+        <div class="collapsible-header cityBtn orange lighten-2 blue-grey-text text-darken-4"
                 data-city="${city}"
                 data-state="${state}"
                 data-lat="${lat}"
@@ -115,8 +125,8 @@ function addCityEl(city, state, lat, lng) {
             ${city}, ${state}
             <i class="material-icons right removeBtn">delete_forever</i>    
         </div>
-        <div class="collapsible-body collection left-align">
-            <a class="collection-item getBrewBtn" data-count="5">
+        <div class="collapsible-body collection left-align" style="margin:-24px;">
+            <a class="collection-item getBrewBtn z-depth-3 orange lighten-2 green-text" data-count="5">
                 <i class="material-icons left">add_location</i>Show 5 Breweries</a>
         </div>
     </li>
@@ -216,9 +226,9 @@ function renderBreweries(dataSet, city, state) {
             var locationLatLng = location.latLng;
             var marker;
 
-            // Create a marker for each location
+            // Create a marker for each location //#2AAA8A
             if (i === 0) {
-                marker = L.marker(locationLatLng, { icon: L.mapquest.icons.circle({ primaryColor: '#2AAA8A' }) })
+                marker = L.marker(locationLatLng, { icon: L.mapquest.icons.circle({ primaryColor: '#263238' }) })
                     .bindPopup(location.adminArea5 + ', ' + location.adminArea3);
             } else {
 
@@ -233,7 +243,7 @@ function renderBreweries(dataSet, city, state) {
                     .setLatLng(locationLatLng)
                     .setContent(content);
 
-                marker = L.marker(locationLatLng, { icon: L.mapquest.icons.marker() })
+                marker = L.marker(locationLatLng, { icon: L.mapquest.icons.marker({primaryColor: '#4caf50'}) })
                     .bindPopup(customPopup);
             }
             group.push(marker);
