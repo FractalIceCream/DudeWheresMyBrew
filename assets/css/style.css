@@ -18,10 +18,15 @@ body {
 
 }
 
+::placeholder{
+    color: black;
+}
+
+
 .black-text {
-    font-family: Rubik, sans-serif;
-    font-weight: bold;
-    font: size 36px;
+font-weight: bold;
+font-size: 42px;
+font-family: "Rubik", sans-serif;
 }
 
 .right-align {
