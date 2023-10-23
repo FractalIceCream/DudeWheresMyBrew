@@ -6,6 +6,7 @@ body {
     background-position: center center;
     background-repeat: no-repeat;
     background-attachment: fixed;
+    
 }
 
 .header {
@@ -15,6 +16,7 @@ body {
     justify-content: space-between;
     margin: 0;
     padding: 50px;
+    
 
 }
 
@@ -22,6 +24,7 @@ body {
     font-family: Rubik, sans-serif;
     font-weight: bold;
     font: size 36px;
+    text-shadow:0px 0px 20px turquoise,0px 0px 20px turquoise;
 }
 
 .right-align {
@@ -32,6 +35,7 @@ body {
             'GRAD' 0,
             'opsz' 24
     }
+    text-shadow:0px 0px 20px turquoise,0px 0px 20px turquoise;
 }
 
 .citySearch {
@@ -100,4 +104,5 @@ body {
 
 .material-symbols-outlined:hover {
     cursor: pointer;
+    
 }
