@@ -40,8 +40,10 @@ body {
     background-color: #4CAF50; /* Background color when the switch is turned on */
   }
   .toggle-label::before {
-    content: "";
+    content: "  🍺";
+    line-height: 30px;
     position: absolute;
+    white-space: pre;
     width: 30px;
     height: 30px;
     border-radius: 50%;
