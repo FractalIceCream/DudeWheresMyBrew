@@ -2,7 +2,7 @@
 ```
 Project Title: Dude-WheresMyBrew
 
-Description: Be able to find local or search breweries around using Google Maps and OpenBreweryDB APIs.
+Description: Be able to find local or search breweries around using Mapquest and OpenBreweryDB APIs.
 ```
 ## User Story
 
@@ -18,13 +18,22 @@ We have created a brewery finder that will allow you to search a city and find l
 ```
 
 ## Images
-```
-```
+
+![light-mode](./assets/img/page%20-%20light%20mode.png)
+![dark-mode](./assets/img/page%20-%20dark%20mode.png)
+![search by city](./assets/img/search.PNG)
+![show brewery locations](./assets/img/show%20brewery%20locations.PNG)
+![remove previous searches](./assets/img/clear%20history.PNG)
+
 ## Links
 
-```
 [github repository:](https://github.com/FractalIceCream/DudeWheresMyBrew)
 [project website:](https://fractalicecream.github.io/DudeWheresMyBrew/)
 [OpenBreweryDB API:](https://www.openbrewerydb.org/)
-[Google Maps API](https://developers.google.com/maps/)
-```
+[Mapquest API](https://developer.mapquest.com/documentation)
+
+[Vincent's GitHub](https://github.com/FractalIceCream)
+[Allex's GitHub](https://github.com/allexortiz)
+[Ernest's GitHub](https://github.com/ernestbeecherl)
+[Lindsay's GitHub](https://github.com/Lindsayagreen)
+[Eliseo's GitHub](https://github.com/lsaox)
