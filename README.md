@@ -36,13 +36,14 @@ We have created a brewery finder that will allow you to search a city and find l
 [Eliseo's GitHub](https://github.com/lsaox)
 
 ## User Story
-
+```
 AS A user
 I WANT to see the nearest locations of breweries, cideriers, or bottleshops.
 SO THAT I can go and checkout drinking at local business and special craft brews.
+```
 
 ## Acceptance Criteria
-
+```
 GIVEN a map interface with searching functionality 
 WHEN I search for a city
 THEN I am presented with map visual of the city and log the user's city in the search history and in local storage
@@ -59,4 +60,4 @@ THEN I am presented with a color scheme representing from light mode to dark mod
 WHEN I select the trash can icon adjacent to it's city
 THEN I am presented the removal of that city from the search history and local storage
 THEN I am again presented with current and future conditions for that city
-
+```
