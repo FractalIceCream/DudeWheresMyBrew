@@ -98,7 +98,7 @@ body {
 }
 
 .searchBtn {
-    background-color: darkcyan;
+    /* background-color: darkcyan; */
     color: #FFFFFF;
     /* Change to your desired text color */
     font-size: 20px;
@@ -106,6 +106,7 @@ body {
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
+    box-shadow: inset 0px 0px 8px turquoise, 0 0 15px turquoise;
 }
 
 .container {
