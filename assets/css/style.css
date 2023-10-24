@@ -57,16 +57,11 @@ body {
 }
 
 .citySearch {
-    /* border: 4px black solid; */
     padding: 20px;
     width: 500px;
 }
 
 #map {
-    /* display: inline;
-    justify-content: flex-end; */
-    /* position: absolute; */
-    /* float: right;  */
     width: 1000px;
     height: 600px;
     margin: 100px;
@@ -85,10 +80,6 @@ body {
     font-weight: bold;
 }
 
-/* .searchContainer {
-    display: flex;
-} */
-
 #cityInput {
     font-size: 16px;
     color: #333;
@@ -98,9 +89,7 @@ body {
 }
 
 .searchBtn {
-    /* background-color: darkcyan; */
     color: #FFFFFF;
-    /* Change to your desired text color */
     font-size: 20px;
     border: none;
     padding: 10px 20px;

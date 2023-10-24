@@ -1,8 +1,6 @@
 var apiKey = '4mo1Txzr1ivmB4uKFnqLsmMiKmOEhFul'; //map quest api key
 
 L.mapquest.key = apiKey;
-// 'map' refers to a <div> element with the ID map
-// https://www.mapquestapi.com/geocoding/v1/address?key=KEY&location=Washington,DC
 
 var userInput = $('#cityInput');
 var map;
@@ -13,9 +11,7 @@ var toggle = $("#toggle");
 var leaflet = $('.leaflet-popup-content-wrapper');
 
 var savedCitiesEl = $('#savedCities');
-// var byDistUrl = 'https://api.openbrewerydb.org/v1/breweries?';  //by_dist=${},${}38.8977,77.0365&per_page=3`;
-var breweryUrl = 'https://api.openbrewerydb.org/v1/breweries?';    //by_city=dallas';
-// `https://api.openbrewerydb.org/v1/breweries/search?query=${userCity}`;
+var breweryUrl = 'https://api.openbrewerydb.org/v1/breweries?';  
 $(function () {
 
     //if no saved cities in local storage provide empty object otherwise get from local
@@ -219,7 +215,7 @@ function renderBreweries(dataSet, city, state) {
             brewName: dataSet[i].name
         });
     }
-
+    
     map.remove();
     L.mapquest.geocoding().geocode(breweries, createFGMap);
 
