@@ -153,11 +153,13 @@ function addCityEl(city, state, lat, lng) {
     `));
 }
 
+
+
 //remove btn event to remove adjacent city btn from webpage and delete data from local storage
 function removeCityEl(event) {
     event.stopPropagation();
     var btnEvent = $(event.target);
-    var city = btnEvent.siblings('.cityBtn').attr('data-city');
+    var city = btnEvent.parents('.cityBtn').attr('data-city');
     var result = savedCities.findIndex(item => item.city === city);
     savedCities.splice(result, 1);
 
