@@ -147,6 +147,7 @@ function addCityEl(city, state, lat, lng) {
         </div>
     </li>
     `));
+    lightDarkMode();
 }
 
 
